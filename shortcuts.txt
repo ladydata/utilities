@@ -1,0 +1,97 @@
+> Mac Sublime Text 3 default key bindings:
+
+CTRL + LEFT ARROW --> go to beginning of the line (MacOS), same as CTRL + A
+CTRL + RIGHT ARROW --> go to end of the line (MacOS), same as CTRL + E
+CMD + UP ARROW --> go to top of the file (MacOS)
+CMD + DOWN ARROW --> go to bottom of the file (MacOS)
+
+CMD + Z --> undo (MacOS)
+CMD + F --> find (MacOS)
+
+CMD + B --> open console and run (python) code
+Right click on the console: see unsaved changes, see diff
+
+
+CMD + P --> go to anything (shows full path of each open file)
+CMD + P + @ --> go to functions in code, same as CMD + R
+CMD + P + # --> go to variables in code
+CMD + P + :15 --> go to line (15), same as CTRL + G
+
+
+CMD + D --> select words to replace all at once (highlight first word occurrence, then click to select each subsequent occurrence)
+
+CMD + click --> select multiple locations to add text
+
+CMD + SHIFT + L --> multicursor selection of all lines to edit (highlight the desired subqsequent lines first, then apply the command and move cursor to desired location)
+
+OPTION + LEFT CLICK --> to drag the multicursor on the left (beginning of the lines selected from clicking)
+
+OPTION + CMD + 2 --> switch view to 2 columns (up to 4)
+Move line - COMMAND + Control + Arrow Up or Down.
+Duplicate line - COMMAND + Shift + D
+
+CMD + K CMD + U --> convert to uppercase
+CMD + K CMD + L --> convert to lowercase
+
+ALT + CMD + [ --> code folding
+ALT + CMD + ] --> code unfolding
+
+
+-- CONFLUENCE WIKI
+
+Shortcuts while using the wiki editor:
+
+[ autocomplete for weblinks ALSO: CMD K
+! autocomplete for images ALSO: CMD M
+{ insert macro
+(? question mark help (info)
+(! insert an exclamation mark (warning)
+(on light bulb
+* will turn a word to bold ALSO: CMD B
+_ will italicize ALSO: CMD I
++ will underline ALSO: CMD U
+^ will superscript
+~ will underscript
+h1. will start header 1
+bq. will start block quote
+* will create a bulleted list ALSO: CMD SHIFT 8
+1.
+2.
+the above will create a numbered list ALSO: CMD SHIFT 7
+|| col1 || col2 || col3 || will create a table with 3 columns
+(/ insert a green check mark box (tip)
+(* insert a star
+(y insert a thumb up
+;) winky face
+:) smiley faces
+
+Macros: Highlight, Page Tree, Panel, Expand, Code Block, Anchor, Attachments, Style (CSS),
+Chart, Section, Column, PDF, WidgetConnector (Google Docs, Youtube, Twitter)
+
+
+
+-- Block Formatting
+Paragraph           ⌘ Option 0
+Heading 1           ⌘ Option 1
+Heading 6           ⌘ Option 6
+Numbered list       ⌘ Shift 7
+Bullet list         ⌘ Shift 8
+Quote               ⌘ Shift 9
+
+-- Rich Formatting
+Files and images    ⌘ M
+Link                ⌘ K
+Insert markup       ⌘ Shift D
+Macro               ⌘ Shift A
+Table               ⌘ Shift I
+Add row above       Control Option ↑
+Add row below       Control Option ↓
+Add column after    Control Option →
+Add column before   Control Option ←
+
+-- Editing Actions
+Preview             ⌘ Shift E
+Save                ⌘ Enter
+Find & Replace      ⌘ Shift H
+
+

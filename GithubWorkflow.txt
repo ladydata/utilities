@@ -1,0 +1,92 @@
+Github Workflow
+Created by Paula Alves
+Last updated Feb 28, 2019
+rev 2019-02-27
+
+
+
+FIRST TIME SET UP
+
+Follow the instructions in this link to configure git:
+
+https://help.github.com/en/articles/setting-your-commit-email-address-in-git
+
+
+
+Create a copy of the repository of interest into your local computer
+
+git clone https://github.com/githubuser/reponame
+
+
+Set this up to push updates without entering your password everytime
+
+git remote rm origin
+git remote add origin https://USERNAME:PASSWORD@github.com/user/reponame.git
+git remote -v
+should look like this:
+origin https://github.com/githubuser/reponame.git (fetch)
+
+origin https://github.com/githubuser/reponame.git (push)
+
+
+
+
+STEPS TO CONTRIBUTE TO A SHARED REPOSITORY
+
+Update your local copy with the latest updates on master
+git pull origin master # recommended, specially if intending to contribute to an existing branch
+
+Check out branch - Make sure to not skip this step because you should NOT push directly into the master!
+if working on your own branch, create a branch and check out
+
+git checkout -b branch new-branch
+
+if working on an existing branch instead, named for example feature-a, then check out existing branch
+
+git checkout feature-a
+
+Make your changes to files
+Stage changes
+git add *
+
+Commit changes into branch
+git commit -m 'testing workflow'
+
+Push branch with committed changes to Verana's shared repo (origin)
+git push origin new-branch
+
+Create a pull request
+Go to https://github.com/USER_NAME/REPOSITORY_NAME/pull/new/BRANCH_NAME
+
+Alternatively: go to the source repository webpage and click on the "new pull request" button.
+
+
+
+Give the Pull Request a title, and add a description of what you're changing in the comments box. You can tag people to be notified (for example, the maintainers) by adding "@" and the name: @github_username.
+
+Once you're done, click on the green button "create pull request". This will start the process to merge your changes (from your branch) into the source repository. You can see the status of pull requests (including yours) in the "pull requests" tab.
+
+After your pull request has been accepted and merged, it will be moved into the "closed" category. You may then delete your branch on Github (click on button in pull request page), and on git (locally) via the following commands:
+
+
+
+    git checkout master  # you cannot delete the branch that you've checked out
+    git branch -d new-branch # -d stands for delete
+
+
+NOTES:
+
+You can see all your branches (and the active one) via the command:
+
+git branch
+You can always switch branches via the command:
+
+git checkout <branchname>
+Ignore tracking for an uncommitted file:
+
+git checkout <filename>
+(Advanced) git log and rebase:
+
+git log --graph --decorate --pretty=oneline --abbrev-commit
+git rebase -i HEAD~10 # rebase 10 commits
+git rebase -i <sha>
