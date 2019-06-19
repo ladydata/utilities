@@ -1,0 +1,93 @@
+FILE TRANSFER - using the CLI from local (pra$):
+
+# FROM local to server:
+scp -P 3022 ~/loc/visits_since_2017.yaml paulara@33.456.123.99:~/provider-network
+
+scp -P 6653 ~/downloads/lalala ec2-user@10.0.43.66:~/ec2-user/.fastai/data
+
+scp -P 3022 ~/documents/pipeline/*-dedup.yaml paulara@33.456.123.99:~/athena-runner-files
+
+# FROM server to local:
+scp -P 3022 paulara@33.456.123.99:/home/paulara/athena-runner-files/pipeline-steps-example.yaml ~/Downloads
+
+
+# Run Athena pipeline:
+python pipeline-runner.py steps-file=patient-visit-rev.yaml > ./log/runner-logs.log 2>&1 &
+
+python athena-pipeline-runner.py steps-file=../provider-network/visits_since_2017.yaml > ./log/network-logs.log 2>&1 &
+
+scp -P 3022 ~/data-platform/pipeline-steps-example.yaml paulara@33.456.123.99:~/athena-runner-files
+
+-------------------------------------------------------------------------------
+BASIC COMMANDS
+
+ls -l * displays all files in directory and respective sizes
+ls -lh same as above, but in better readable format
+
+sudo -l
+passwd (to change password; enter current then new)
+
+ls -lrt
+
+check Ubuntu version: lsb_release -a
+check git version: git --version
+
+> overwrite
+>> append
+
+# to check processes status:
+ps -fea | grep python (for example, to catch .py files running)
+
+# to immediately kill a process:
+kill -9 21201 (21201 is the process number)
+-------------------------------------------------------------------------------
+
+> Deriving the network of last 3 doctors in the above list from open CMS data.
+file source: https://questions.cms.gov/faq.php?faqId=7977, specifically: http://downloads.cms.gov/foia/physician-shared-patient-patterns-2015-days30.zip
+
+The unziped file size is 1.65 GB: physician-shared-patient-patterns-2015-days30.txt
+
+if grep -E '1346292216|1073514717|1578595153' physician-shared-patient-patterns-2015-days30.txt >> results.csv; then echo "found"; else echo "not found"; fi
+
+wc -l results.csv --> 144 matches
+(wc returns newlines, words, bytes)
+-l lines
+-m characters
+-w words
+
+tr -d ' ' < results.csv > results.csv (to remove all whitespaces from the file)
+
+Note: tr -d '[:space:]' < results.csv > results_cl.csv will remove ' \t\n\r\f\v'
+
+patient provider visit_date
+A       X        01-10-18
+A       Y        01-05-18
+A       Z        02-01-18
+A       Y        02-02-18
+B       Y        01-20-18
+B       Z        02-05-18
+B       Z        02-17-18
+
+-------------------------------------------------------------------------------
+vi <filename>
+
+vi - exit options:
+
+Hit the Esc key to enter "Normal mode".
+Then you can type : to enter "Command-line mode". A colon (:) will appear at the bottom of the screen and you can type in one of the following commands.
+To execute a command, press the Enter key.
+
+:q to quit (short for :quit)
+:q! to quit without saving (short for :quit!)
+:wq to write and quit
+:wq! to write and quit even if file has only read permission (if file does not have write permission: force write)
+:x to write and quit (similar to :wq, but only write if there are changes)
+:exit to write and exit (same as :x)
+:qa to quit all (short for :quitall)
+:cq to quit without saving and make Vim return non-zero error (i.e. exit with error)
+
+You can also exit Vim directly from "Command mode" by typing ZZ to save and quit (same as :x) or ZQ to just quit (same as :q!). (Note that case is important here. ZZ and zz do not mean the same thing.)
+
+Vim has extensive help - that you can access with the :help command - where you can find answers to all your questions and a tutorial for beginners.
+
+-------------------------------------------------------------------------------
