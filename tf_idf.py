@@ -1,31 +1,28 @@
 import pyspark.sql.functions as f
 from pyspark.sql.types import StructField, StructType, StringType, ArrayType, IntegerType
+# from pyspark.sql.window import Window
 
 
-def calc_tf_idf(df, id_col="doc_id", tokens_col="document"):
+def calc_tf_idf(df, id_col="doc_id", tokens_col="array_of_tokens", df_num=1):
 
     # Calculate number of documents
     num_docs = df.count() * 1.
 
-    # Turn array of tokens into rows of tokens
-    unfolded_df = df.withColumn("token", f.explode(f.col(tokens_col)))
-    # unfolded_df.cache()
+    # Calculate Term Frequency * Inverse Document Frequency
+    tf_idf = df.\
+        .withColumn("token", f.explode(f.col(tokens_col)))\
+        .groupBy(id_col, "token").agg(f.count(tokens_col).alias("tf"))\
+        .groupBy("token").agg(f.count(id_col).alias("df"), f.sum("tf").alias("tf"))\
+        .where(f.col("df") >= df_num)\
+        .withColumn("tf_idf", f.col("tf") * f.log((num_docs + 1)/(f.col("df") + 1)))\
+        .drop("tf", "df")
 
-    # Calculate Term Frequency
-    df_TF = unfolded_df\
-        .groupBy(id_col, "token").agg(f.count(tokens_col).alias("tf"))
+    return tf_idf
 
-    # Calculate Inverse Document Frequency
-    df_IDF = unfolded_df\
-        .groupBy("token").agg(f.countDistinct(id_col).alias("df"))\
-        .withColumn("idf", f.log((num_docs + 1) / (f.col("df") + 1)))
-
-    # Calculate TF.IDF
-    TF_IDF = df_TF\
-        .join(df_IDF, "token", "left")\
-        .withColumn("tf_idf", f.col("tf") * f.col("idf"))
-
-    return TF_IDF.select(id_col, "token", "tf_idf")
+# Note: if keeping doc_id, then replace the line:
+# .groupBy("token").agg(f.count(id_col).alias("df"), f.sum("tf").alias("tf"))\
+# by the line:
+# .withColumn("df", f.count(f.col(id_col)).over(Window.partitionBy("token")))\
 
 
 # Test
@@ -43,3 +40,17 @@ df = spark.createDataFrame(data, schema)
 test = calc_tf_idf(df, id_col="doc_id", tokens_col="document")
 
 test.show(20, False)
+
+
+# # Easy way to scrap HTML, XML, RTF, HL7 markup from notes (by A Koshta):
+# def scrap(s):
+#    s = re.sub(" +", " ",
+#        re.sub("~|\||\^", " ",
+#        re.sub("<.*?>", " ",
+#        re.sub("&gt;", ">",
+#        re.sub("&lt;", "<",
+#        re.sub("&amp;", "&",
+#        re.sub("\\\\\w+|\{.*?\}|}", " ",
+#        re.sub("<!\[CDATA\[|\]\]>", " ", s)
+#    )))))))
+#    return s
